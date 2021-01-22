@@ -34,11 +34,14 @@
 
 <script>
 import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
-
+import UserExistsDialog from "../UserExistsDialog";
 const hasUpperCase = (value) => {
   return value.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/);
 };
 export default {
+  components:{
+    UserExistsDialog
+  },
   data() {
     return {
       form: {

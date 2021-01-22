@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="290">
+    <v-dialog v-model="showDialog" persistent max-width="290">
       <v-card>
         <v-card-title class="headline"
           >Use Google's location service?</v-card-title
@@ -11,10 +11,10 @@
         >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false"
+          <v-btn color="green darken-1" text @click="hideDialog()"
             >Disagree</v-btn
           >
-          <v-btn color="green darken-1" text @click="dialog = false"
+          <v-btn color="green darken-1" text @click="hideDialog()"
             >Agree</v-btn
           >
         </v-card-actions>
@@ -29,6 +29,26 @@ export default {
   props: {
     dialog: Boolean
   },
+  data(){
+    return{
+      showDialog: this.dialog
+    }
+  },
+  watch:{
+    dialog: {
+    // the callback will be called immediately after the start of the observation
+    immediate: true, 
+    handler (val) {
+      this.showDialog = val;
+      console.log(val);
+    }
+  }
+  },
+  methods: {
+    hideDialog(){
+     this.showDialog = false;
+    }
+  }
 };
 </script>
 
