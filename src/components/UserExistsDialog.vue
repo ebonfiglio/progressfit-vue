@@ -14,9 +14,7 @@
           <v-btn color="green darken-1" text @click="hideDialog()"
             >Disagree</v-btn
           >
-          <v-btn color="green darken-1" text @click="hideDialog()"
-            >Agree</v-btn
-          >
+          <v-btn color="green darken-1" text @click="hideDialog()">Agree</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -27,28 +25,27 @@
 export default {
   name: "UserExistsDialog",
   props: {
-    dialog: Boolean
+    dialog: Boolean,
   },
-  data(){
-    return{
-      showDialog: this.dialog
-    }
+  data() {
+    return {
+      showDialog: this.dialog,
+    };
   },
-  watch:{
+  watch: {
     dialog: {
-    // the callback will be called immediately after the start of the observation
-    immediate: true, 
-    handler (val) {
-      this.showDialog = val;
-      console.log(val);
-    }
-  }
+      handler() {
+        this.showDialog = this.dialog;
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   methods: {
-    hideDialog(){
-     this.showDialog = false;
-    }
-  }
+    hideDialog() {
+      this.showDialog = false;
+    },
+  },
 };
 </script>
 
