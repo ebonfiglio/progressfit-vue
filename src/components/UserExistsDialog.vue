@@ -11,10 +11,10 @@
         >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="hideDialog()"
-            >Disagree</v-btn
+          <v-btn color="red darken-1" text @click="hideDialog()"
+            >Cancel</v-btn
           >
-          <v-btn color="green darken-1" text @click="hideDialog()">Agree</v-btn>
+          <v-btn color="green darken-1" text @click="goToLogin()">Log In</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import router from "../router";
 export default {
   name: "UserExistsDialog",
   props: {
@@ -45,6 +46,9 @@ export default {
     hideDialog() {
       this.showDialog = false;
     },
+    goToLogin(){
+      router.push('login');
+    }
   },
 };
 </script>

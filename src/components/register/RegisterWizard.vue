@@ -46,10 +46,12 @@
 import { mapActions } from "vuex";
 import RegisterLogin from "./RegisterLogin";
 import RegisterDiet from "./RegisterDiet";
+import RegisterTos from "./RegisterTos";
 export default {
   name: "RegisterWizard",
   components: {
     RegisterLogin,
+    RegisterTos,
     RegisterDiet,
   },
   data() {
