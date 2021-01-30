@@ -28,7 +28,6 @@
             <v-spacer></v-spacer>
             <v-btn
               color="primary"
-              :disabled="!canGoNext"
               text
               @click="nextButtonClick"
             >
@@ -59,7 +58,7 @@ export default {
       currentStepNumber: 1,
       canGoNext: false,
       asyncState: null,
-      steps: ["RegisterLogin", "RegisterDiet"],
+      steps: ["RegisterLogin", "RegisterTos", "RegisterDiet"],
       form: {
         email: null,
         confirmEmail: null,
@@ -111,6 +110,7 @@ export default {
           password: this.form.password,
           confirmPassword: this.form.confirmPassword,
         },
+        tos: this.form.tos,
         settings: {
           gender: this.form.gender,
           age: this.form.age,
@@ -132,20 +132,24 @@ export default {
       //finally method set this.asyncState to success
     },
 
-    processStep(step) {
-      Object.assign(this.form, step.data);
-      this.canGoNext = step.valid;
+     nextButtonAction () {
+      this.$refs.currentStep.submit()
+        .then(stepData => {
+          Object.assign(this.form, stepData)
+          if (this.isLastStep) {
+            this.submitOrder()
+          } else {
+            this.goNext()
+          }
+        })
+        .catch(error => console.log(error))
     },
-    goBack() {
-      this.currentStepNumber--;
-      this.canGoNext = true;
+    goBack () {
+      this.currentStepNumber--
     },
-    goNext() {
-      this.currentStepNumber++;
-      this.$nextTick(() => {
-        this.canGoNext = !this.$refs.currentStep.$v.$invalid;
-      });
-    },
+    goNext () {
+      this.currentStepNumber++
+    }
   },
 };
 </script>

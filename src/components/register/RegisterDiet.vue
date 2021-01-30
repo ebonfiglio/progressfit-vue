@@ -80,6 +80,7 @@ export default {
   },
   methods: {
     submit() {
+      this.$v.$touch();
       if (!this.$v.$invalid) {
         this.$emit("update", {
           data: {

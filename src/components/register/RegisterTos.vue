@@ -1,53 +1,50 @@
 <template>
-    <div>
-        <v-textarea value="blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah "></v-textarea>
-        <form @input="submit" class="form">
+  <div>
+    <v-textarea
+      value="blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah "
+    ></v-textarea>
+    <form class="form">
       <v-checkbox
-      ref="tos"
-              v-model="$v.form.tos.$model"
-              label="Accept TOS"
-              color="indigo"
-              required
-            ></v-checkbox>
-              <div v-if="$v.form.tos.$error && !$v.form.tos.required" class="error">
+        ref="tos"
+        v-model="$v.form.tos.$model"
+        label="Accept TOS"
+        color="indigo"
+        @click="submit"
+      ></v-checkbox>
+      <div v-if="$v.form.tos.$error && !$v.form.tos.checked" class="error">
         Accepting TOS is required
       </div>
-        </form>
-    </div>
+    </form>
+  </div>
 </template>
 
 <script>
 export default {
- data() {
+  data() {
     return {
       form: {
         tos: null,
       },
-
     };
   },
   validations: {
     form: {
       tos: {
-        required: required,
+        checked: (value) => value === true,
       },
     },
   },
-   methods: {
+  methods: {
     submit() {
-      if (!this.$v.$invalid) {
-        this.$emit("update", {
-          data: {
-            gender: this.form.tos
-          },
-          valid: !this.$v.invalid,
-        });
-      }
+      this.$emit("update", {
+        data: {
+          tos: this.form.tos,
+        },
+        valid: !this.$v.invalid,
+      });
     },
   },
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
