@@ -6,11 +6,7 @@
           <v-card-text>
             <div v-if="wizardInProgress" v-show="asyncState !== 'pending'">
               <keep-alive
-                ><component
-                  ref="currentStep"
-                  :is="currentStep"
-                  @update="processStep"
-                ></component
+                ><component ref="currentStep" :is="currentStep"></component
               ></keep-alive>
             </div>
             <div v-else>
@@ -26,11 +22,7 @@
               Cancel
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              text
-              @click="nextButtonClick"
-            >
+            <v-btn color="primary" text @click="nextButtonClick">
               {{ isLastStep ? "Create Account" : "Next" }}
             </v-btn>
           </v-card-actions>
@@ -66,7 +58,7 @@ export default {
         confirmPassword: null,
         tos: null,
         gender: null,
-        age: null,
+        birthday: null,
         activityLevel: null,
         height: null,
         weight: null,
@@ -93,13 +85,6 @@ export default {
   },
   methods: {
     ...mapActions(["addUserAction"]),
-    nextButtonClick() {
-      if (this.isLastStep) {
-        this.createAccount();
-      } else {
-        this.goNext();
-      }
-    },
     async createAccount() {
       this.asyncState = "pending";
       //pass this.form to API
@@ -113,7 +98,7 @@ export default {
         tos: this.form.tos,
         settings: {
           gender: this.form.gender,
-          age: this.form.age,
+          birthday: this.form.birthday,
           activityLevel: this.form.activityLevel,
           weight: this.form.weight,
           height: this.form.height,
@@ -132,24 +117,25 @@ export default {
       //finally method set this.asyncState to success
     },
 
-     nextButtonAction () {
-      this.$refs.currentStep.submit()
-        .then(stepData => {
-          Object.assign(this.form, stepData)
+    nextButtonClick() {
+      this.$refs.currentStep
+        .submit()
+        .then((stepData) => {
+          Object.assign(this.form, stepData);
           if (this.isLastStep) {
-            this.submitOrder()
+            this.createAccount();
           } else {
-            this.goNext()
+            this.goNext();
           }
         })
-        .catch(error => console.log(error))
+        .catch((error) => console.log(error));
     },
-    goBack () {
-      this.currentStepNumber--
+    goBack() {
+      this.currentStepNumber--;
     },
-    goNext () {
-      this.currentStepNumber++
-    }
+    goNext() {
+      this.currentStepNumber++;
+    },
   },
 };
 </script>

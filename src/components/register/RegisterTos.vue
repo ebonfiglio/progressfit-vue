@@ -9,7 +9,6 @@
         v-model="$v.form.tos.$model"
         label="Accept TOS"
         color="indigo"
-        @click="submit"
       ></v-checkbox>
       <div v-if="$v.form.tos.$error && !$v.form.tos.checked" class="error">
         Accepting TOS is required
@@ -36,11 +35,15 @@ export default {
   },
   methods: {
     submit() {
-      this.$emit("update", {
-        data: {
-          tos: this.form.tos,
-        },
-        valid: !this.$v.invalid,
+      this.$v.$touch();
+      return new Promise((resolve, reject) => {
+        if (!this.$v.$invalid) {
+          resolve({
+            tos: this.form.tos,
+          });
+        } else {
+          reject("Error accepting TOS");
+        }
       });
     },
   },

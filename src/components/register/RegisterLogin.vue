@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @input="submit" class="form">
+    <form class="form">
       <v-text-field
         ref="email"
         @blur="checkIfUserExists"
@@ -44,7 +44,7 @@
         v-model="$v.form.password.$model"
         label="Password"
         required
-        password
+        type="password"
       ></v-text-field>
       <div
         v-if="$v.form.password.$error && !$v.form.password.required"
@@ -68,6 +68,7 @@
         ref="confirmPassword"
         v-model="$v.form.confirmPassword.$model"
         label="Confirm Password"
+        type="password"
         required
       ></v-text-field>
       <div
@@ -142,17 +143,19 @@ export default {
       this.existingUser = false;
     },
     submit() {
-      if (!this.$v.$invalid) {
-        this.$emit("update", {
-          data: {
+      this.$v.$touch();
+      return new Promise((resolve, reject) => {
+        if (!this.$v.$invalid) {
+          resolve({
             email: this.form.email,
             confirmEmail: this.form.confirmEmail,
             password: this.form.password,
             confirmPassword: this.form.confirmPassword,
-          },
-          valid: !this.$v.$invalid,
-        });
-      }
+          });
+        } else {
+          reject("invalid login info");
+        }
+      });
     },
   },
 };
