@@ -89,14 +89,14 @@ export default {
       this.asyncState = "pending";
       //pass this.form to API
       var newUserRequest = {
-        user: {
+        AppUser: {
           email: this.form.email,
           confirmEmail: this.form.confirmEmail,
           password: this.form.password,
           confirmPassword: this.form.confirmPassword,
         },
-        tos: this.form.tos,
-        settings: {
+        Tos: this.form.tos,
+        AppUserSettings: {
           gender: this.form.gender,
           birthday: this.form.birthday,
           activityLevel: this.form.activityLevel,

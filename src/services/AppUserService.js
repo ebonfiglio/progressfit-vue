@@ -16,7 +16,7 @@ class AppUserService {
 
   async create(user) {
     try {
-      var response = await Axios.post(`${BASE_URL}`, user, {
+      var response = await Axios.post(`${API}auth/register`, user, {
         headers: { "Content-Type": "application/json" },
       });
 
